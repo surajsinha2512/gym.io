@@ -1,0 +1,1 @@
+export const LOCAL_STORAGE_LOGIN_KEY = Object.freeze("LOCAL_STORAGE_LOGIN_KEY");
