@@ -12,29 +12,25 @@ const Settings =() => {
   const [userName, setUserName] = React.useState("");
   const [password, setPassword] = React.useState("");
   const navigate = useHistory();
-  const {userInfo, setUserInfo }  = React.useContext(StateContext)
 
   const handleSignIn = () => {
     console.log("handle sign in ")
     try {
       axios
-        .get("http://localhost:8888/login", {
-          headers: { emailOrPhone: userName, password: password, rememberMe: false },
+        .post("http://localhost:8888/login", {
+          emailOrPhone: userName, password: password ,
         })
         .then((resp) => {
           console.log(resp);
-          localStorage.setItem(CONSTANTS.LOCAL_STORAGE_LOGIN_KEY, JSON.stringify(resp.data))
-          if(resp.data?.data?.userName){
-            console.log()
-            setUserInfo(resp.data)
-            toast.success("Login successfully");
-            localStorage.setItem(CONSTANTS.LOCAL_STORAGE_LOGIN_KEY, JSON.stringify(resp.data))
+          if(resp.data?.data?.accessToken){
+            localStorage.setItem(CONSTANTS.LOCAL_STORAGE_USER_INFO, JSON.stringify({emailOrPhone: userName}));
+            localStorage.setItem(CONSTANTS.LOCAL_STORAGE_LOGIN_KEY, JSON.stringify(resp.data?.data?.accessToken))
             navigate.replace('/home');
           }
           else {
             toast.error("Incorrect User name or Password");
           }
-        })
+        })  
         .catch((err) => {
           console.log("err", err);
         });
