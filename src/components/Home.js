@@ -16,7 +16,7 @@ const Home = () => {
 
     return (
         <>
-        <div>Welcome {loginUserInfo?.data?.name}</div>
+        <div>Welcome hello{loginUserInfo?.data?.name}</div>
         </>
     )
 }
